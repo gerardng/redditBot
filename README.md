@@ -10,6 +10,15 @@ Make sure the `python` is installed:
 $ python redditVoteBot.py
 ```
 
+```bash
+$ python readReddit.py
+```
+
+```bash
+$ python replyReddit.py
+```
+
+
 ## Issues
 
 Type 'close' or 'exit' to properly close the program/s
