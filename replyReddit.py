@@ -28,17 +28,17 @@ else:
         posts_replied_to = filter(None, posts_replied_to)
 
 # Get values from subreddit
-subreddit = r.get_subreddit('learnpython')
-for submission in subreddit.get_hot(limit = 5):
+subreddit = r.get_subreddit('python')
+for submission in subreddit.get_hot(limit = 10):
     # print submission.title
 
     # If we haven't replied to this post before
     if submission.id not in posts_replied_to:
 
         # Do a case insensitive search
-        if re.search("i love python", submission.title, re.IGNORECASE):
+        if re.search("Sending e-mails", submission.title, re.IGNORECASE):
             # Reply to the post
-            submission.add_comment("Nigerian scammer bot says: It's all about the Bass (and Python)")
+            submission.add_comment("Nice")
             print "Bot replying to : ", submission.title
 
             # Store the current id into our list
