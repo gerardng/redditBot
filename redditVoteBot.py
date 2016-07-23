@@ -1,5 +1,6 @@
 import praw
 import getpass
+import sys
 
 user_agent = ("GerardPy Bot 0.1")
 
@@ -8,7 +9,7 @@ instance = praw.Reddit(user_agent = user_agent)
 #login function
 def login_reddit():
 	global user_name
-	user_name = input('Username: ')
+	user_name = raw_input('Username: ')
 	user_password = getpass.getpass()
 	try:
 		print('Attempting to log in Reddit')
@@ -36,11 +37,14 @@ def vote(other_user_para, limit_para, up_para):
         	comment.downvote()
         	print('Done..')
 
-print('Reddit Upvote/Downvote Bot by Gerard N')
-print('Dashboard')
+print('\nReddit Upvote/Downvote Bot by Gerard N')
+print('--type exit to close the program')
 while login_reddit():
 	continue
-other_user_para = input('Enter reddit username to modify: ')
+other_user_para = raw_input('Enter reddit username to modify: ')
+if other_user_para in("exit", "Exit", "close", "Close"):
+	print('Closing program...')
+	sys.exit(0)
 limit_para = input('Enter the number of comments to modify: ')
 up_para = input('Enter 1 to upvote otherwise enter 0 to downvote')
 vote(other_user_para, limit_para, up_para)
