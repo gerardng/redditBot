@@ -18,33 +18,33 @@ r = praw.Reddit(user_agent = user_agent)
 r.login(REDDIT_USERNAME, REDDIT_PASS)
 
 # Have we run this code before? If not, create an empty list
-if not os.path.isfile("posts_replied_to.txt"):
-    posts_replied_to = []
+if not os.path.isfile("replied_heap.txt"):
+    replied_heap = []
 else:
     # Read file, split, remove last null
-    with open("posts_replied_to.txt", "r") as f:
-        posts_replied_to = f.read()
-        posts_replied_to = posts_replied_to.split("\n")
-        posts_replied_to = filter(None, posts_replied_to)
+    with open("replied_heap.txt", "r") as f:
+        replied_heap = f.read()
+        replied_heap = replied_heap.split("\n")
+        replied_heap = filter(None, replied_heap)
 
 # Get values from subreddit
-subreddit = r.get_subreddit('python')
-for submission in subreddit.get_hot(limit = 10):
+subreddit = r.get_subreddit(SUBREDDIT_NAME)
+for submission in subreddit.get_hot(limit = 20):
     # print submission.title
 
     # If we haven't replied to this post before
-    if submission.id not in posts_replied_to:
+    if submission.id not in replied_heap:
 
         # Do a case insensitive search
-        if re.search("Sending e-mails", submission.title, re.IGNORECASE):
+        if re.search(SUBMISSION_TITLE, submission.title, re.IGNORECASE):
             # Reply to the post
-            submission.add_comment("Nice")
+            submission.add_comment(REPLY_MESSAGE)
             print "Bot replying to : ", submission.title
 
             # Store the current id into our list
-            posts_replied_to.append(submission.id)
+            replied_heap.append(submission.id)
 
 # Write our updated list back to the file
-with open("posts_replied_to.txt", "w") as f:
-    for post_id in posts_replied_to:
+with open("replied_heap.txt", "w") as f:
+    for post_id in replied_heap:
         f.write(post_id + "\n")
